@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String         @id @default(uuid())
+  name           String
+  email          String         @unique
+  passwordHash   String
+  role           String         @default("USER") // USER, ADMIN
+  status         String         @default("ACTIVE") // ACTIVE, BLOCKED
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  loginLogs      LoginLog[]
+}
+
+model LoginLog {
+  id             String         @id @default(uuid())
+  userId         String?
+  emailAttempted String
+  ipAddress      String
+  location       String?
+  device         String?
+  status         String         // SUCCESS, FAILED, BLOCKED
+  riskScore      Int            @default(0) // 0 to 100
+  riskLevel      String         @default("SAFE") // SAFE, SUSPICIOUS, CRITICAL
+  createdAt      DateTime       @default(now())
+
+  user           User?          @relation(fields: [userId], references: [id])
+}
+
+model SecurityAlert {
+  id             String         @id @default(uuid())
+  type           String         // pl: BRUTE_FORCE, UNUSUAL_IP
+  description    String
+  severity       String         // LOW, MEDIUM, HIGH, CRITICAL
+  resolved       Boolean        @default(false)
+  ipAddress      String?
+  createdAt      DateTime       @default(now())
+}
