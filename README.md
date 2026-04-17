@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛡️ SentinelX
 
-## Getting Started
+![SentinelX Banner](https://img.shields.io/badge/SentinelX-SOC_Dashboard-00F0FF?style=for-the-badge&logo=shield&labelColor=131A2A)
 
-First, run the development server:
+**SentinelX** é um painel de Security Operations Center (SOC) moderno e focado na detecção de tráfego de autenticação suspeito e gerenciamento de ameaças. O objetivo do sistema é fornecer uma interface "Glassmorphism Dark Mode" premium para monitorar acessos e interceptar padrões de ataque, como o Brute Force, em tempo real.
 
+---
+
+## 🔥 Funcionalidades Principais
+
+- **🔒 Autenticação Robusta**: Registro e Login de usuários, senhas criptografadas (Bcrypt) e tokens de acesso (JWT).
+- **🧠 Risk Score Engine**: Toda tentativa de login recebe uma "Pontuação de Risco" com base na reputação do IP, número de erros recentes e horário do acesso. 
+- **🛑 Detecção de Ameaças**: O algoritmo nativo detecta ataques de _Brute Force_ bloqueando temporariamente o acesso e escalando um Alerta Crítico para análise dos administradores.
+- **⚡ Simulador Nativo**: O painel de Autenticação contém um simulador de ataque integrado, disparando múltiplas requisições sequenciais para que você possa visualizar e combater ameaças geradas dinamicamente.
+- **📊 Dashboard Responsivo**: Interface com métricas e gráficos usando _Recharts_, organizados por uma estética premium e minimalista.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+1. **Frontend**: [Next.js 15 (App Router)](https://nextjs.org/) + [React](https://react.dev/) + [TailwindCSS](https://tailwindcss.com/) + [Lucide Icons](https://lucide.dev/)
+2. **Backend**: API Routes (Next.js) operando na arquitetura *Server-Side* + [Prisma ORM](https://www.prisma.io/).
+3. **Database**: [SQLite](https://www.sqlite.org/index.html) *(Leve, rápido e encapsulado)*.
+4. **Segurança**: BcryptJS + JSONWebToken
+
+---
+
+## 🚀 Como instalar e executar
+
+Siga as instruções abaixo para rodar o **SentinelX** livremente em sua máquina local.
+
+**1. Clone o Repositório**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/anking084/SentinelX.git
+cd SentinelX
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**2. Instale as Dependências**
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**3. Configure as Variáveis de Ambiente (Opcional)**
+Crie um arquivo `.env` e declare o endereço do banco de dados e segredos JWT:
+```env
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="sua_chave_secreta"
+REFRESH_SECRET="sua_chave_refresh"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**4. Sincronize o Banco de Dados (Prisma)**
+```bash
+npx prisma generate
+npx prisma db push
+```
 
-## Learn More
+**5. Inicie o Servidor de Desenvolvimento**
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Abra `http://localhost:3000` em seu navegador para ter acesso à tela de autenticação!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📸 Overview de Uso
 
-## Deploy on Vercel
+1. Tente realizar login com informações inválidas.
+2. Na página principal, utilize o botão **Simular Ataque Brute Force**.
+3. Logue corretamente, e como o Admininistrador, observe que no menu **Investigações** as ocorrências foram marcadas como *CRITICAL* prontas para serem avaliadas pela equipe do SOC! 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📝 Licença
+Desenvolvido para fins de demonstração e estudo (Portfólio). Código aberto.
